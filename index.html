@@ -1,20 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Minha foto</title>
+  <title>Livia</title>
   <style>
-    html, body { margin:0; height:100%; background:#000; overflow:hidden; }
-    img { width:100%; height:100%; object-fit:contain; display:block; }
+    :root {
+      --petala: #fbe9ee;
+      --rosa-claro: #f4c9d4;
+      --rosa: #e6a1b5;
+      --rosa-profundo: #c9748f;
+      --marfim: #fff8f5;
+      --champagne: #d4b08c;
+    }
+
+    html, body { margin: 0; height: 100%; }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+      box-sizing: border-box;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,.75), transparent 45%),
+        radial-gradient(circle at 85% 90%, rgba(244,201,212,.7), transparent 50%),
+        var(--petala);
+      overflow: hidden;
+    }
+
+    /* Moldura externa: rosa com brilho suave de madeira lacada */
+    .moldura {
+      position: relative;
+      padding: 16px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f9d9e2 0%, var(--rosa) 45%, #f2bccb 70%, var(--rosa-claro) 100%);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,.9) inset,
+        0 -2px 3px rgba(201,116,143,.45) inset,
+        0 18px 40px rgba(201,116,143,.35),
+        0 4px 10px rgba(201,116,143,.25);
+    }
+
+    /* Fio champagne fino entre a moldura e o passe-partout */
+    .fio {
+      padding: 2px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #ecd3b8, var(--champagne), #f3e2cf);
+      box-shadow: 0 1px 3px rgba(120,70,80,.35);
+    }
+
+    /* Passe-partout marfim */
+    .passepartout {
+      padding: 16px;
+      border-radius: 3px;
+      background: var(--marfim);
+      box-shadow: 0 2px 6px rgba(201,116,143,.25) inset;
+    }
+
+    .passepartout img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: calc(92vw - 100px);
+      max-height: calc(100dvh - 140px);
+      border-radius: 2px;
+      box-shadow:
+        0 0 0 1px rgba(212,176,140,.7),
+        0 3px 10px rgba(120,70,80,.3);
+    }
+
+    /* Pérolas nos cantos */
+    .perola {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 30%, #fff 0%, #fdf1f3 45%, #e9c3cd 100%);
+      box-shadow: 0 1px 2px rgba(120,70,80,.45);
+    }
+    .perola.tl { top: 2px; left: 2px; }
+    .perola.tr { top: 2px; right: 2px; }
+    .perola.bl { bottom: 2px; left: 2px; }
+    .perola.br { bottom: 2px; right: 2px; }
   </style>
 </head>
 <body>
-  <img src="foto.jpeg" alt="Foto" id="foto">
+  <div class="moldura" id="quadro">
+    <span class="perola tl"></span>
+    <span class="perola tr"></span>
+    <span class="perola bl"></span>
+    <span class="perola br"></span>
+    <div class="fio">
+      <div class="passepartout">
+        <img src="foto.jpeg" alt="Foto">
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Toque na foto para entrar em tela cheia
-    document.getElementById('foto').addEventListener('click', () => {
-      const el = document.documentElement;
-      if (el.requestFullscreen) el.requestFullscreen();
+    // Toque no quadro para tela cheia (onde o navegador permitir)
+    document.getElementById('quadro').addEventListener('click', function () {
+      var el = document.documentElement;
+      if (!document.fullscreenElement && el.requestFullscreen) {
+        el.requestFullscreen().catch(function () {});
+      }
     });
   </script>
 </body>
